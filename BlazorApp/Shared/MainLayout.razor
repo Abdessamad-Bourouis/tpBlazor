@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime js
+<PageTitle>BlazorApp</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+        <div class="alert alert-info my-2">
+             Click here to switch themes 
+             <Button @onclick="SwapTheme" Primary="true">@SetThemeName Mode</Button>
+        </div>
+        
+        <button @onclick="ShowPrompt">Show Prompt</button>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    bool isDark;
+    string SetThemeName => isDark ? "Light" : "Dark";
+    async Task SwapTheme()
+    {
+        isDark = !isDark;
+        await js.InvokeVoidAsync("themeChooser.setTheme", SetThemeName);
+    }
+    string message = "world";
+    async Task ShowPrompt()
+    {
+       
+    }
+   
+}
